@@ -1,33 +1,24 @@
 {
-    "variables": {
-        "aws_access_key": "{{env `AWS_ACCESS_KEY`}}",
-        "aws_secret_key": "{{env `AWS_SECRET_KEY`}}"
-    },
-    "builders": [
-        {
-            "access_key": "{{user `aws_access_key`}}",
-            "secret_key": "{{user `aws_secret_key`}}",
-            "ami_name": "packer-linux-aws-demo-{{timestamp}}",
-            "instance_type": "t2.micro",
-            "region": "us-east-2",
-            "source_ami": "ami-25615740",
-            "ssh_username": "ec2-user",
-            "type": "amazon-ebs"
-        }
-    ],
-    "provisioners": [
-
-      {
-          "type": "shell",
-          "script": "maven.sh"
-      },
-      {
-          "type": "shell",
-          "script": "java.sh"
-      },
-      {
-          "type": "shell",
-          "script": "git.sh"
-      }
-            ]
-        }
+"variables":{
+"aws_access_key": "{{env `AWS_ACCESS_KEY`}}",
+"aws_secret_key": "{{env `AWS_SECRET_KEY`}}"
+},
+"builders":[
+{
+"type": "amazon-ebs",
+"access_key": "{{user `aws_access_key`}}",
+"secret_key": "{{user `aws_secret_key`}}",
+"region": "us-east-2",
+"source_ami": "ami-25615740",
+"instance_type": "t2.micro",
+"ssh_username": "ec2-user",
+"ami_name": "packer_ex{{timestamp}}"
+}
+],
+"provisioners":[
+{
+"type":"shell",
+"script":"provision.sh"
+}
+]
+}
